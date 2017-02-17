@@ -23,11 +23,16 @@
           label SSH Keys
           select.form-control(v-model="newDroplet.ssh_keys" multiple)
             option(v-for="key in newDropletOptions.keys" v-bind:value="key.id") {{ key.name }}
+        .form-group
+          label Tags
+          input.form-control(v-model="newDroplet.tagsString")
         button.btn.btn-success(v-on:click.prevent="createDroplet") Create
 
 </template>
 
 <script>
+const _ = require('lodash')
+
 export default {
   store: ['droplets'],
   data () {
@@ -61,12 +66,14 @@ export default {
   },
   methods: {
     createDroplet () {
-      console.log(this.newDroplet)
       const httpOptions = {
         headers: {
           Authorization: 'Bearer ' + this.$store.config.apiKey
         }
       }
+
+      this.newDroplet.tags = _.map(this.newDroplet.tagsString.split(' '), _.trim)
+      delete this.newDroplet.tagsString
       this.$http.post('https://api.digitalocean.com/v2/droplets', this.newDroplet, httpOptions)
           .then(resp => {
             console.log('good!')
