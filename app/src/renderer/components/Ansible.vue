@@ -41,7 +41,21 @@
         let hosts = _.map(this.droplets, function (droplet) {
           return droplet.name + ' ansible_host=' + droplet.networks.v4[0].ip_address + ' ansible_python_interpreter=/usr/bin/python3'
         })
-        fs.writeFileSync(this.inventoryPath, '[hosts]\n' + hosts.join('\n'))
+        fs.writeFileSync(this.inventoryPath, '[hosts]\n' + hosts.join('\n') + '\n')
+
+        let allTags = _.flatten(_.map(this.droplets, host => {
+          return host.tags
+        }))
+
+        allTags.forEach(tag => {
+          fs.appendFileSync(this.inventoryPath, `\n[${tag}]\n`)
+          let tagHosts = _.filter(this.droplets, droplet => {
+            return droplet.tags.includes(tag)
+          })
+          tagHosts.forEach(droplet => {
+            fs.appendFileSync(this.inventoryPath, droplet.name + ' ansible_host=' + droplet.networks.v4[0].ip_address + ' ansible_python_interpreter=/usr/bin/python3' + '\n')
+          })
+        })
       },
       runTest () {
         exec('ansible -i "' + this.inventoryPath + '" hosts -m ping', (error, stdout, stderr) => {
