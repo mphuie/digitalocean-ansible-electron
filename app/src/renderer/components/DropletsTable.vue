@@ -8,6 +8,7 @@
           tr
             th Status
             th Name
+            th Tags
             th vCpu(s)
             th Memory (MB)
             th Disk
@@ -17,6 +18,7 @@
         tbody
           tr(v-for="droplet in droplets")
             td {{ droplet.status }}
+            td {{ droplet.tags }}
             td {{ droplet.name }}
             td {{ droplet.vcpus }}
             td {{ droplet.memory }}
