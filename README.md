@@ -4,7 +4,9 @@
 
 - Simple UI for digitalocean droplet view and creation
 - Builds an ansible inventory file based on your digitalocean droplets, grouping hosts by tags
+- TODO create/edit ansible playbooks with built-in editor
 - TODO kick off ansible playbooks on host(s)
+- TODO kick off ansible playbooks on DO droplet creation
 - ...
 
 ## Build Setup
