@@ -1,6 +1,11 @@
-# digitalocean-electron
+# digitalocean-ansible-electron
 
-> An electron-vue project
+> An electron-vuejs project that integrates digitalocean API and ansible
+
+- Simple UI for digitalocean droplet view and creation
+- Builds an ansible inventory file based on your digitalocean droplets, grouping hosts by tags
+- TODO kick off ansible playbooks on host(s)
+- ...
 
 ## Build Setup
 
